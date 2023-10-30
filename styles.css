@@ -1,0 +1,81 @@
+/* RESET */
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+/* STYLES */
+body {
+  background-image: url('img/background.png');
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+div.frame {
+  border: 10px solid rgb(0, 0, 0);
+  border-radius: 25px;
+  background: #ffffff;
+  position: absolute;
+  width: 600px;
+  height: 670px;
+}
+div.frame:after {
+  box-shadow: 0px 0px 15px -3px rgba(0, 0, 0, 0.7);
+  background: rgb(255, 255, 255);
+  border-radius: 28px;
+  position: absolute;
+  bottom: -14px;
+  right: -14px;
+  left: -14px;
+  top: -14px;
+  z-index: -1;
+  content: '';
+}
+div.grid {
+  border: 0.25px solid black;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 15px auto;
+  width: 550px;
+  height: 550px;
+}
+div.cell {
+  outline: 0.25px solid black;
+  width: 10px;
+  height: 10px;
+}
+div.interface {
+  background-color: rgba(0, 0, 0, 1);
+  display: flex;
+  justify-content: center;
+  height: fit-content;
+  margin: 15px 0 0 0;
+  padding: 5px 0;
+}
+div.button-wrapper {
+  width: fit-content;
+  display: flex;
+  column-gap: 5px;
+}
+div.button {
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 0 0 0 3px;
+  height: 50px;
+  width: 50px;
+
+}
+div.button:hover {
+  box-shadow: inset 0px 0px 7px 0px rgba(0,0,0,0.65);
+  background-color: white;
+} 
+img.button-img {
+  height: 45px;
+}
+img.button-img:hover {
+  transform: translateX(-50%);
+}
