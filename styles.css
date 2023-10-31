@@ -33,25 +33,32 @@ div.frame:after {
   z-index: -1;
   content: '';
 }
-div.grid {
-  border: 0.25px solid black;
-  border-radius: 5px;
-  overflow: hidden;
-  margin: 15px auto;
-  width: 550px;
-  height: 550px;
+div.grid-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 580px;
 }
-div.cell {
-  outline: 0.25px solid black;
-  width: 10px;
+div.grid-small {
+  border: 0.5px solid rgba(0, 0, 0, 1);
+  display: flex;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  overflow: hidden;
+  width: 550px;
+  height: 543px;
+}
+div.cell-small {
+  border: 0.5px solid rgba(0, 0, 0, 1);
   height: 10px;
+  width: 10.125px;
+  margin: -0.25px -0.25px -0.25px -0.25px; 
 }
 div.interface {
   background-color: rgba(0, 0, 0, 1);
   display: flex;
   justify-content: center;
   height: fit-content;
-  margin: 15px 0 0 0;
   padding: 5px 0;
 }
 div.button-wrapper {
@@ -67,7 +74,6 @@ div.button {
   padding: 0 0 0 3px;
   height: 50px;
   width: 50px;
-
 }
 div.button:hover {
   box-shadow: inset 0px 0px 7px 0px rgba(0,0,0,0.65);
@@ -79,3 +85,4 @@ img.button-img {
 img.button-img:hover {
   transform: translateX(-50%);
 }
+
