@@ -39,19 +39,31 @@ div.grid-wrapper {
   align-items: center;
   height: 580px;
 }
-div.grid-small {
+div.grid-area {
   border: 0.5px solid rgba(0, 0, 0, 1);
   display: flex;
-  align-content: flex-start;
+  align-content: flex-start;  
   flex-wrap: wrap;
   overflow: hidden;
   width: 550px;
-  height: 543px;
+  height: 550px;
 }
 div.cell-small {
   border: 0.5px solid rgba(0, 0, 0, 1);
-  height: 10px;
+  height: 10.125px;
   width: 10.125px;
+  margin: -0.25px -0.25px -0.25px -0.25px; 
+}
+div.cell-medium {
+  border: 0.5px solid rgba(0, 0, 0, 1);
+  height: 25.45px;
+  width: 25.45px;
+  margin: -0.25px -0.25px -0.25px -0.25px; 
+}
+div.cell-large {
+  border: 0.5px solid rgba(0, 0, 0, 1);
+  height: 42.7px;
+  width: 42.7px;
   margin: -0.25px -0.25px -0.25px -0.25px; 
 }
 div.interface {
