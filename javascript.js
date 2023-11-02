@@ -32,8 +32,15 @@ function drawGrid() {
   return grid.innerHTML = htmlCells;
 }
 
+function resetGrid() {
+  state--;
+  drawGrid();
+}
+
 const grid = document.querySelector('.grid-area');
 const gridBtn = document.querySelector('.grid-btn');
+const resetBtn = document.querySelector('.reset-btn');
 
+resetBtn.addEventListener('click',resetGrid);
 gridBtn.addEventListener('click',drawGrid);
 window.addEventListener('load',createCells);
