@@ -86,6 +86,7 @@ div.button {
   padding: 0 0 0 3px;
   height: 50px;
   width: 50px;
+  position: relative;
 }
 div.button:hover {
   box-shadow: inset 0px 0px 7px 0px rgba(0,0,0,0.65);
@@ -94,7 +95,14 @@ div.button:hover {
 img.button-img {
   height: 45px;
 }
-img.button-img:hover {
+.move {
   transform: translateX(-50%);
+}
+.color-picker { 
+  opacity: 0;
+  width: 60px; 
+  height: 52px; 
+  position: absolute; 
+  left: -5px; 
 }
 

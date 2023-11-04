@@ -37,9 +37,21 @@ function resetGrid() {
   drawGrid();
 }
 
+
+
+const image = document.querySelector('.marker-btn');
+const button = document.querySelector('.button-marker');
 const grid = document.querySelector('.grid-area');
 const gridBtn = document.querySelector('.grid-btn');
 const resetBtn = document.querySelector('.reset-btn');
+const markerBtn = document.querySelector('.marker-btn');
+
+button.addEventListener('mouseover', function() {
+  image.classList.add('move');
+});
+button.addEventListener('mouseout', function() {
+  image.classList.remove('move');
+});
 
 resetBtn.addEventListener('click',resetGrid);
 gridBtn.addEventListener('click',drawGrid);
