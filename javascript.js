@@ -39,18 +39,18 @@ function resetGrid() {
 
 
 
-const image = document.querySelector('.marker-btn');
-const button = document.querySelector('.button-marker');
+const buttons = Array.from(document.querySelectorAll('.button'));
 const grid = document.querySelector('.grid-area');
 const gridBtn = document.querySelector('.grid-btn');
 const resetBtn = document.querySelector('.reset-btn');
-const markerBtn = document.querySelector('.marker-btn');
 
-button.addEventListener('mouseover', function() {
-  image.classList.add('move');
-});
-button.addEventListener('mouseout', function() {
-  image.classList.remove('move');
+buttons.map((button) => {
+  button.addEventListener('mouseover', function() {
+    button.children[0].classList.add('move');
+  });
+  button.addEventListener('mouseout', function() {
+    button.children[0].classList.remove('move');
+  });
 });
 
 resetBtn.addEventListener('click',resetGrid);
