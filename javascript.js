@@ -1,50 +1,67 @@
-let state = 1;
+let gridState = 0;
+let gridCells;
+let cellColor;
 
-function createCells() {
-  const cellArray = []; 
-  for(i = 0; i <= 3248; i++) {
-    cellArray.push('<div class="cell-small"></div>');
-  }
-  const htmlCells = cellArray.reduce((acc,cur) => acc + cur);
-  return grid.innerHTML = htmlCells;
-}
 
-function drawGrid() {
+function fillGrid() {
   const cellArray = [];
-  state++;
-  if(state % 3 === 1) {
+  gridState++;
+
+  if(gridState % 3 === 1) {
     for(i = 0; i <= 3248; i++) {
-      cellArray.push('<div class="cell-small"></div>');
+      cellArray.push('<div class="cell small"></div>');
     }
   }
-  else if (state % 3 == 2) {
+  else if (gridState % 3 == 2) {
     for(i = 0; i <= 483; i++) {
-      cellArray.push('<div class="cell-medium"></div>');
+      cellArray.push('<div class="cell medium"></div>');
     }
   }
   else {
     for(i = 0; i <= 168; i++) {
-      cellArray.push('<div class="cell-large"></div>');
+      cellArray.push('<div class="cell large"></div>');
     }
   }
-  
   const htmlCells = cellArray.reduce((acc,cur) => acc + cur);
-  return grid.innerHTML = htmlCells;
+  grid.innerHTML = htmlCells;
+  attachCellListeners();
 }
 
-function resetGrid() {
-  state--;
-  drawGrid();
+function attachCellListeners() {
+  gridCells = Array.from(document.querySelectorAll('.cell')); 
+  gridCells.map((cell) => {
+    cell.addEventListener('mousedown',function() {
+      cell.style.backgroundColor = cellColor;
+
+      gridCells.map((cell) => {
+        cell.addEventListener('mousemove',paintCell);
+      });
+
+      window.addEventListener('mouseup',removeHandler); 
+    });
+  });
 }
 
+function paintCell() { 
+  this.style.backgroundColor = cellColor;
+}
 
+function removeHandler() { 
+  gridCells.map((cell) => {
+    cell.removeEventListener('mousemove', paintCell);
+  });
+}
 
 const buttons = Array.from(document.querySelectorAll('.button'));
+const colorPicker = document.querySelector('.color-picker');
 const grid = document.querySelector('.grid-area');
 const gridBtn = document.querySelector('.grid-btn');
 const resetBtn = document.querySelector('.reset-btn');
 
-buttons.map((button) => {
+window.addEventListener('load',fillGrid);
+gridBtn.addEventListener('click',fillGrid);
+
+buttons.map((button) => { 
   button.addEventListener('mouseover', function() {
     button.children[0].classList.add('move');
   });
@@ -53,6 +70,12 @@ buttons.map((button) => {
   });
 });
 
-resetBtn.addEventListener('click',resetGrid);
-gridBtn.addEventListener('click',drawGrid);
-window.addEventListener('load',createCells);
+resetBtn.addEventListener('click',function() {
+  gridState--;
+  fillGrid();
+});
+
+colorPicker.addEventListener('change', function(event) { 
+  cellColor = event.target.value;
+});
+

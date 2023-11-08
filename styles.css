@@ -48,23 +48,21 @@ div.grid-area {
   width: 550px;
   height: 550px;
 }
-div.cell-small {
+div.cell {
   border: 0.5px solid rgba(0, 0, 0, 1);
+  margin: -0.25px -0.25px -0.25px -0.25px; 
+}
+div.small {
   height: 10.125px;
   width: 10.125px;
-  margin: -0.25px -0.25px -0.25px -0.25px; 
 }
-div.cell-medium {
-  border: 0.5px solid rgba(0, 0, 0, 1);
+div.medium {
   height: 25.45px;
   width: 25.45px;
-  margin: -0.25px -0.25px -0.25px -0.25px; 
 }
-div.cell-large {
-  border: 0.5px solid rgba(0, 0, 0, 1);
+div.large {
   height: 42.7px;
   width: 42.7px;
-  margin: -0.25px -0.25px -0.25px -0.25px; 
 }
 div.interface {
   background-color: rgba(0, 0, 0, 1);
