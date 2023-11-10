@@ -1,7 +1,5 @@
 let gridState = 0;
 let gridCells;
-let cellColor;
-
 
 function fillGrid() {
   const cellArray = [];
@@ -31,8 +29,16 @@ function attachCellListeners() {
   gridCells = Array.from(document.querySelectorAll('.cell')); 
   gridCells.map((cell) => {
     cell.addEventListener('mousedown',function() {
-      cell.style.backgroundColor = cellColor;
-
+      if(buttons[0].classList.contains('.active')) {
+        cell.style.backgroundColor = cellColor; 
+      }
+      if(buttons[1].classList.contains('.active')) {
+        cell.style.backgroundColor = randomColor(); 
+      }
+      if(buttons[2].classList.contains('.active')) {
+        cell.style.backgroundColor = 'white'; 
+      }
+      
       gridCells.map((cell) => {
         cell.addEventListener('mousemove',paintCell);
       });
@@ -43,7 +49,15 @@ function attachCellListeners() {
 }
 
 function paintCell() { 
-  this.style.backgroundColor = cellColor;
+  if(buttons[0].classList.contains('.active')) {
+    this.style.backgroundColor = cellColor; 
+  }
+  if(buttons[1].classList.contains('.active')) {
+    this.style.backgroundColor = randomColor(); 
+  }
+  if(buttons[2].classList.contains('.active')) {
+    this.style.backgroundColor = 'white'; 
+  }
 }
 
 function removeHandler() { 
@@ -52,14 +66,25 @@ function removeHandler() {
   });
 }
 
+function randomColor() { 
+    return `rgb(
+      ${Math.floor(Math.random() * 256)},
+      ${Math.floor(Math.random() * 256)},
+      ${Math.floor(Math.random() * 256)}
+      )`;
+  }
+
 const buttons = Array.from(document.querySelectorAll('.button'));
+const activeBtns = Array.from(document.querySelectorAll('.active-type'));
 const colorPicker = document.querySelector('.color-picker');
 const grid = document.querySelector('.grid-area');
 const gridBtn = document.querySelector('.grid-btn');
 const resetBtn = document.querySelector('.reset-btn');
+const diceBtn = document.querySelector('.dice-btn');
 
 window.addEventListener('load',fillGrid);
 gridBtn.addEventListener('click',fillGrid);
+diceBtn.addEventListener('click',randomColor);
 
 buttons.map((button) => { 
   button.addEventListener('mouseover', function() {
@@ -70,6 +95,15 @@ buttons.map((button) => {
   });
 });
 
+activeBtns.map((button) => {
+  button.addEventListener('click', function() {
+    activeBtns.forEach((button) => {
+      button.classList.remove('.active');
+    })
+    button.classList.add('.active');
+  });
+})
+
 resetBtn.addEventListener('click',function() {
   gridState--;
   fillGrid();
@@ -78,4 +112,5 @@ resetBtn.addEventListener('click',function() {
 colorPicker.addEventListener('change', function(event) { 
   cellColor = event.target.value;
 });
+
 
