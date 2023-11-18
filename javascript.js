@@ -1,61 +1,61 @@
 let gridState = 0;
 let gridCells;
 
+//Creates initial grid on page load or grid button click
 function fillGrid() {
-  const cellArray = [];
+  grid.replaceChildren();
   gridState++;
 
   if(gridState % 3 === 1) {
     for(i = 0; i <= 3248; i++) {
-      cellArray.push('<div class="cell small"></div>');
+      const smallCell = document.createElement('div');
+      smallCell.classList.add('cell','small');
+      grid.appendChild(smallCell);
     }
   }
   else if (gridState % 3 == 2) {
     for(i = 0; i <= 483; i++) {
-      cellArray.push('<div class="cell medium"></div>');
+      const mediumCell = document.createElement('div');
+      mediumCell.classList.add('cell','medium');
+      grid.appendChild(mediumCell);
     }
   }
   else {
     for(i = 0; i <= 168; i++) {
-      cellArray.push('<div class="cell large"></div>');
+      const largeCell = document.createElement('div');
+      largeCell.classList.add('cell','large');
+      grid.appendChild(largeCell);
     }
   }
-  const htmlCells = cellArray.reduce((acc,cur) => acc + cur);
-  grid.innerHTML = htmlCells;
   attachCellListeners();
 }
 
+//Adds mousedown handlers to each cell
+//Based on active button, fills cells with chosen color mode
+//Filling cells on mousemove only on mousedown is achieved by ...
+//Mousedown event creating mousemove and mouseup handlers within itself
 function attachCellListeners() {
   gridCells = Array.from(document.querySelectorAll('.cell')); 
   gridCells.map((cell) => {
     cell.addEventListener('mousedown',function() {
-      if(buttons[0].classList.contains('.active')) {
-        cell.style.backgroundColor = cellColor; 
-      }
-      if(buttons[1].classList.contains('.active')) {
-        cell.style.backgroundColor = randomColor(); 
-      }
-      if(buttons[2].classList.contains('.active')) {
-        cell.style.backgroundColor = 'white'; 
-      }
-      
+      cell.style.backgroundColor = paintCell; 
       gridCells.map((cell) => {
         cell.addEventListener('mousemove',paintCell);
       });
-
-      window.addEventListener('mouseup',removeHandler); 
+      window.addEventListener('mouseup',removeHandler);
     });
   });
 }
 
+//Based on active button, fills cells with color mode
 function paintCell() { 
-  if(buttons[0].classList.contains('.active')) {
+  if(buttons[0].classList.contains('active')) {
     this.style.backgroundColor = cellColor; 
   }
-  if(buttons[1].classList.contains('.active')) {
+  if(buttons[1].classList.contains('active')) {
     this.style.backgroundColor = randomColor(); 
   }
-  if(buttons[2].classList.contains('.active')) {
+  if(buttons[2].classList.contains('active')) {
     this.style.backgroundColor = 'white'; 
   }
 }
@@ -66,13 +66,21 @@ function removeHandler() {
   });
 }
 
+//Produces a random rgb color value
 function randomColor() { 
-    return `rgb(
-      ${Math.floor(Math.random() * 256)},
-      ${Math.floor(Math.random() * 256)},
-      ${Math.floor(Math.random() * 256)}
-      )`;
-  }
+  return `rgb(
+    ${Math.floor(Math.random() * 256)},
+    ${Math.floor(Math.random() * 256)},
+    ${Math.floor(Math.random() * 256)}
+    )`;
+}
+
+//Disables button icon returning to initial state
+//Removal of event listener necessitates function declaration
+//Function expression inside event listener didn't work
+function mouseOut() {
+  this.children[0].classList.remove('move');
+}
 
 const buttons = Array.from(document.querySelectorAll('.button'));
 const activeBtns = Array.from(document.querySelectorAll('.active-type'));
@@ -82,35 +90,47 @@ const gridBtn = document.querySelector('.grid-btn');
 const resetBtn = document.querySelector('.reset-btn');
 const diceBtn = document.querySelector('.dice-btn');
 
-window.addEventListener('load',fillGrid);
-gridBtn.addEventListener('click',fillGrid);
-diceBtn.addEventListener('click',randomColor);
-
+//Changes button icons on hover and click states
+//Hover state is added to all buttons before any is clicked
+//Once a button is clicked it acquires active class and 
+//Hover state is reapplied to remaining inactive buttons
 buttons.map((button) => { 
-  button.addEventListener('mouseover', function() {
+  if(!button.classList.contains('active')) { 
+    button.addEventListener('mouseover', function() {
+      button.children[0].classList.add('move');
+    });
+    button.addEventListener('mouseout', mouseOut);
+  }
+  
+  button.addEventListener('click', function() {
+    buttons.map((button) => {
+      button.classList.remove('active');
+      button.children[0].classList.remove('move'); 
+
+      if(!button.classList.contains('active')) {
+        button.addEventListener('mouseover', function() {
+          button.children[0].classList.add('move');
+        });
+        button.addEventListener('mouseout', mouseOut);
+      }
+    });
+
+    button.classList.add('active');
     button.children[0].classList.add('move');
-  });
-  button.addEventListener('mouseout', function() {
-    button.children[0].classList.remove('move');
+    button.removeEventListener('mouseout', mouseOut);
   });
 });
 
-activeBtns.map((button) => {
-  button.addEventListener('click', function() {
-    activeBtns.forEach((button) => {
-      button.classList.remove('.active');
-    })
-    button.classList.add('.active');
-  });
-})
-
+//Resets current grid type 
 resetBtn.addEventListener('click',function() {
   gridState--;
   fillGrid();
 });
 
+//Gets color value from html input color wheel
 colorPicker.addEventListener('change', function(event) { 
   cellColor = event.target.value;
 });
 
-
+window.addEventListener('load',fillGrid);
+gridBtn.addEventListener('click',fillGrid);

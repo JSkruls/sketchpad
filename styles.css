@@ -86,7 +86,7 @@ div.button {
   width: 50px;
   position: relative;
 }
-div.button:hover {
+div.button:hover, .active {
   box-shadow: inset 0px 0px 7px 0px rgba(0,0,0,0.65);
   background-color: white;
 } 
